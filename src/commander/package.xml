@@ -1,0 +1,29 @@
+<package>
+  <name>pixy_commander</name>
+  <version>1.0.0</version>
+  <description>
+	Test package for working with pixycam
+  </description>
+
+  <maintainer email="bill@tyler-labs.com">Bill Tyler</maintainer>
+
+  <license>BSD</license>
+
+  <author>Bill Tyler</author>
+
+  <url type="website"></url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>dynamic_reconfigure</build_depend>
+  <build_depend>pixy_msgs</build_depend>
+
+  <run_depend>rospy</run_depend>
+  <run_depend>tf</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>python-serial</run_depend>
+  <run_depend>dynamic_reconfigure</run_depend>
+  <run_depend>pixy_msgs</run_depend>
+</package>
+
+

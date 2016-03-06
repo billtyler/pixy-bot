@@ -1,0 +1,55 @@
+#!/usr/bin/env python
+
+import rospy
+from geometry_msgs.msg import Twist
+from sensor_msgs.msg import Joy
+from pixy_msgs.msg import PixyData
+from pixy_msgs.msg import PixyBlock
+from std_msgs.msg import String
+
+def dataCommand(data):
+#	rospy.loginfo(data)
+
+	for item in data.blocks:
+		if item.signature == 1:			
+			string = "Red-" + str(item.roi.x_offset)
+			rospy.loginfo(string)
+
+			t = Twist()
+			t.linear.x = 0
+
+			if item.roi.x_offset > 155:
+				string = "left"
+				t.angular.z = -.3
+
+			if item.roi.x_offset < 145:
+				string = "right"
+				t.angular.z = .3
+
+			if item.roi.x_offset <= 155 and item.roi.x_offset >= 145:
+				string = "middle"
+				t.angular.z = 0
+
+			rospy.loginfo(string)
+	
+			pub.publish(t)
+
+def joyCommand(data):
+	t = Twist()
+	t.linear.x = data.axes[1]
+	t.angular.z = data.axes[0]
+
+	pub.publish(t)
+
+def start():
+	global pub
+	pub = rospy.Publisher('cmd_vel', Twist,queue_size=10)
+	rospy.Subscriber("joy", Joy, joyCommand)
+	rospy.Subscriber("block_data", PixyData, dataCommand)
+
+
+	rospy.init_node('pixy_commander')
+	rospy.spin()
+
+if __name__ == '__main__':
+	start()
