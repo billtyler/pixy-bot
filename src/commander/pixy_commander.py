@@ -18,15 +18,17 @@ def dataCommand(data):
 			t = Twist()
 			t.linear.x = 0
 
-			if item.roi.x_offset > 155:
+			middle = item.roi.x_offset + (item.roi.width/2)
+
+			if middle > 155:
 				string = "right"
 				t.angular.z = -.3
 
-			if item.roi.x_offset < 145:
+			if middle < 145:
 				string = "left"
 				t.angular.z = .3
 
-			if item.roi.x_offset <= 155 and item.roi.x_offset >= 145:
+			if middle <= 155 and item.roi.x_offset >= 145:
 				string = "middle"
 				t.angular.z = 0
 
